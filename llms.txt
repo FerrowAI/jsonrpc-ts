@@ -1,0 +1,38 @@
+# jsonrpc-ts
+
+> Spec-correct JSON-RPC 2.0 framing: builders, validating parser, batch support, typed dispatch — transport-agnostic and MCP-relevant.
+
+jsonrpc-ts implements the JSON-RPC 2.0 protocol layer that the Model
+Context Protocol (MCP) is built on, independent of any transport. It gives
+you request/response/notification builders, a parser that validates
+against the spec (jsonrpc version, id rules, params shape) and returns
+typed error codes (-32700 ParseError .. -32603 InternalError), full batch
+(JSON array) support with per-entry validation isolation, a typed
+method-registry `dispatch`/`dispatchAll` with per-request error isolation
+(one handler throwing never breaks sibling requests in a batch, and never
+produces a response for a notification), and an `IdCorrelator` helper for
+async transports (WebSocket, etc) that need to match incoming responses
+back to outstanding calls by id. Use it under stdio, WebSocket, or HTTP —
+this library only handles the message shape. Zero runtime dependencies.
+
+## API
+
+- `buildRequest(method, params?, id?): JsonRpcRequest`
+- `buildNotification(method, params?): JsonRpcNotification`
+- `buildSuccessResponse(id, result): JsonRpcSuccessResponse`
+- `buildErrorResponse(id, code, message, data?): JsonRpcErrorResponse`
+- `parseMessage(raw: string): ParseResult` — handles single messages and batch arrays
+- `validateMessage(value: unknown): ParsedMessage` — validate one already-parsed value
+- `dispatch(handlers: HandlerMap, parsed: ParsedMessage, context?): Promise<JsonRpcResponse | null>`
+- `dispatchAll(handlers: HandlerMap, parseResult: ParseResult, context?): Promise<JsonRpcResponse[]>`
+- `class IdCorrelator { register(id): Promise<R>; resolveResponse(response): boolean; pendingCount }`
+- `ErrorCodes` — `{ ParseError: -32700, InvalidRequest: -32600, MethodNotFound: -32601, InvalidParams: -32602, InternalError: -32603 }`
+- `nextId(): number`
+
+## Install
+
+```
+npm install jsonrpc-ts
+```
+
+Part of the Ferrow open-source toolkit: https://github.com/Ruzylo-cloud/ferrow-toolkit — sponsored by https://ferrow.ai
