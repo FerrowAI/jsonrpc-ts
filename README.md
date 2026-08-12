@@ -1,4 +1,5 @@
 # jsonrpc-ts
+![CI](https://github.com/FerrowAI/jsonrpc-ts/actions/workflows/ci.yml/badge.svg)
 
 Spec-correct JSON-RPC 2.0 framing — request/response/notification
 builders, a validating parser, batch support, typed method-registry
