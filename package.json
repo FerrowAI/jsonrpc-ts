@@ -1,10 +1,12 @@
 {
-  "name": "jsonrpc-ts",
+  "name": "@ferrow/jsonrpc-ts",
   "version": "1.0.0",
   "description": "Spec-correct JSON-RPC 2.0 framing — request/response/notification builders, validating parser, batch support, typed dispatch, id correlation. Transport-agnostic, MCP-relevant. Zero runtime dependencies.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "demo": "npm run build && node examples/demo.js"
@@ -21,7 +23,9 @@
   ],
   "author": "Ruzylo-cloud",
   "license": "MIT",
-  "engines": { "node": ">=18" },
+  "engines": {
+    "node": ">=18"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Ruzylo-cloud/jsonrpc-ts.git"
